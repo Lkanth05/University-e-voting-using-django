@@ -1,0 +1,104 @@
+{% extends "voting/base.html" %}
+{% block content %}
+
+<div class="login-box" style="width: 360px; margin: 7% auto; padding: 30px; background-color: #f7f7f7; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+    <div class="login-logo" style="font-size: 36px; text-align: center; margin-bottom: 25px; color: #333;">
+        <b>e-Voting System</b>
+    </div>
+
+    <div class="login-box-body" style="padding: 20px; background: #fff;">
+        <p class="login-box-msg" style="font-size: 18px; margin-bottom: 20px;"><b>Register an account</b></p>
+        <form action="{% url 'account_register' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="modal-body">
+                {% for field in form1 %}
+                <div class="form-group has-feedback" style="margin-bottom: 15px;">
+                    <span class="text-danger">{{ field.errors }}</span>
+                    {{ field.label_tag }}
+                    {% if field.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                    {{ field }}
+                </div>
+                {% endfor %}
+
+                {% for field in form2 %}
+                <div class="form-group has-feedback" style="margin-bottom: 15px;">
+                    <span class="text-danger">{{ field.errors }}</span>
+                    {{ field.label_tag }}
+                    {% if field.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                    {{ field }}
+                </div>
+                {% endfor %}
+
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-xs-6" style="padding-right: 5px;">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" name="register" style="font-size: 16px; padding: 10px 20px; border-radius: 5px;">
+                            <i class="fa fa-sign-in"></i> Register
+                        </button>
+                    </div>
+                    <div class="col-xs-6" style="padding-left: 5px;">
+                        <a class="btn btn-secondary btn-block btn-flat" href="{% url 'account_login' %}" style="font-size: 16px; padding: 10px 20px; border-radius: 5px;">
+                            <i class="fa fa-upload"></i> Sign In
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{% url 'account_register' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-header" style="padding: 15px; border-bottom: 1px solid #e5e5e5;">
+                    <p class="modal-title" id="register" style="font-size: 18px;">
+                        Create New Account
+                        <span class="float-right">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
+                    </p>
+                </div>
+                <div class="modal-body" style="padding: 20px;">
+                    {% for field in form1 %}
+                    <div class="form-group has-feedback" style="margin-bottom: 15px;">
+                        <span class="text-danger">{{ field.errors }}</span>
+                        {{ field.label_tag }}
+                        {% if field.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+
+                    {% for field in form2 %}
+                    <div class="form-group has-feedback" style="margin-bottom: 15px;">
+                        <span class="text-danger">{{ field.errors }}</span>
+                        {{ field.label_tag }}
+                        {% if field.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer" style="padding: 15px; border-top: 1px solid #e5e5e5;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="register" 
+                            onclick="return confirm('Are you sure the details provided are correct?\nYou will NOT be allowed to make modifications.')" 
+                            class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
